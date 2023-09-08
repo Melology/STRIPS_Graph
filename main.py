@@ -2776,6 +2776,3 @@ for label, centrality in label_centrality.items():
     print(f"Label '{label}': Total Betweenness Edge Centrality = {centrality}")
 
 
-
-
-
