@@ -1,8 +1,6 @@
 # STRIPS_Graph
 
 
-[TOC]
-
 ## For Coding
 * Python 3.9.6
 * Packages:
@@ -58,6 +56,13 @@ STRIPS:
 
 In the above example, The NPCs have two options. One is eating an apple and another is eating a watermelon. Therefore, the graph from the example data should looks like this:  
 
+```mermaid
+graph TD;
+    1-->2;
+    1-->3;
+
+```
+
 ![graph from the example](https://hackmd.io/_uploads/SybKkYO0n.png)  
 - Node_{1}: represent the initial condition:
 ```yaml=
@@ -82,10 +87,10 @@ Of course, we will know that:
 - Edge_{(1,2)}:represent the action so-called eat an apple.
 - Edge_{(1,3)}:represent the action so-called eat a watermelon.
 
-
 ## How to convert from the STRIPS to Graph
 
 from 
+
 
 
 
