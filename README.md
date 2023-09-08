@@ -60,23 +60,20 @@ In the above example, The NPCs have two options. One is eating an apple and anot
 graph TD;
     1-->2;
     1-->3;
-
 ```
-
-![graph from the example](https://hackmd.io/_uploads/SybKkYO0n.png)  
-- Node_{1}: represent the initial condition:
+- $Node_{1}$:represent the initial condition:
 ```yaml=
 hunger: true
 have an apple: true
 have a watermelon: true
 ```
-- Node_{2}:represent the condition after the NPCs eating an apple:
+- $Node_{2}$:represent the condition after the NPCs eating an apple:
 ```yaml=
 hunger: false
 have an apple: false
 have a watermelon: true
 ```
-- Node_{3}:represent the condition after the NPCs eating a watermelon:
+- $Node_{3}$:represent the condition after the NPCs eating a watermelon:
 ```yaml=
 hunger: false
 have an apple: true
@@ -84,12 +81,57 @@ have a watermelon: false
 ```
 
 Of course, we will know that:
-- Edge_{(1,2)}:represent the action so-called eat an apple.
-- Edge_{(1,3)}:represent the action so-called eat a watermelon.
+- $Edge_{(1,2)}$:represent the action so-called eat an apple.
+- $Edge_{(1,3)}$:represent the action so-called eat a watermelon.
 
 ## How to convert from the STRIPS to Graph
 
-from 
+
+### Initialzation
+
+In order to make the process of converting be logicl and without losing any information, Firstly, the Whole graph would contain only single node named node_{1}.  
+
+**Waring: :warning:   
+perhaps it should be called node_{0}, but because in my coding, i name it as node_{1}, it a little bit hard to fix it, Please forgive with this small mistake.** :smile: 
+
+Now, in our graph, it should look like this:
+```mermaid
+graph TD
+    1
+```
+### More nodes could be generated
+
+Considering every time the NPCs do one action, the conditions of this guy could be changed by action at the same time. So Let's consider the action before adding nodes to our graph.
+
+We observe that the there are some actions whose precondition is satisfied by the initial node($node_{1}$).i.e. ***buff_friend_attack*** & ***buff_friend_defense*** & ***buff_friend_speed***  
+
+Naturally, our graph is updating like this:
+
+```mermaid
+graph TD
+1-->2;
+1-->3;
+1-->4;
+```
+- $Node_{2}$:represent the condition after the NPCs buff_friend_attack
+- $Node_{3}$:represent the condition after the NPCs buff_friend_defense
+- $Node_{4}$:represent the condition after the NPCs buff_friend_speed
+- $Edge_{(1,2)}$:represent the action so-called buff_friend_attack
+- $Edge_{(1,3)}$:represent the action so-called buff_friend_defense
+- $Edge_{(1,4)}$:represent the action so-called buff_friend_speed
+
+### Traverse to complete the graph
+
+Every time we add some new nodes to our graph, we always check if there are some actions that could be done by NPCs according to the new nodes.
+
+Finally, we could generate the whole graph! :sunglasses: 
+
+
+
+
+
+
+
 
 
 
