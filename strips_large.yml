@@ -1,0 +1,221 @@
+STRIPS:
+  start:  # 28 conditions
+    enemy_attack_is_debuffed: false
+    enemy_defense_is_debuffed: false
+    enemy_speed_is_debuffed: false
+    enemy_hp_is_low: false
+    enemy_hp_is_mid: false
+    enemy_hp_is_high: true
+    enemy_is_dead: false
+    friend_hp_is_low: true
+    friend_hp_is_mid: false
+    friend_hp_is_high: false
+    friend_is_dead: false
+    friend_attack_is_buffed: false
+    friend_defense_is_buffed: false
+    friend_speed_is_buffed: false
+    i_am_close_to_enemy: false
+    i_am_close_to_friend: true
+    i_am_in_healing_area: false
+    i_found_enemy: true
+    i_found_friend: true
+    i_found_item: false
+    i_have_power_portion: false
+    i_have_mp_portion: true
+    i_have_mp_for_debuff: true
+    i_have_mp_for_fireball: true
+    i_have_mp_for_heal: true
+    i_have_mp_for_buff: true
+    my_hp_is_low: false
+    my_hp_is_mid: false
+    my_hp_is_high: true
+    my_attack_is_buffed: false
+    my_defense_is_buffed: false
+    my_speed_is_buffed: false
+    
+  goal:  # condition(s) STRIPS aims to satisfy
+    enemy_is_dead: true
+  actions:  # 22 actions
+  - melee_enemy:  # melee the nearest enemy
+    precondition:  # conditions that must be all satisfied to perform this action
+      enemy_is_dead: false
+      i_am_close_to_enemy: true
+    postcondition:  # conditions that will be changed after this action
+      enemy_hp_is_high: false
+      enemy_is_dead: true
+      i_am_close_to_enemy: false
+      i_found_enemy: false
+  - buff_friend_attack:
+      precondition:
+      friend_attack_is_buffed: false
+      friend_is_dead: false
+      i_am_close_to_friend: true
+      i_have_mp_for_buff: true
+    postcondition:
+      friend_attack_is_buffed: true
+      i_have_mp_for_buff: false
+  - buff_friend_defense:
+    precondition:
+      friend_defense_is_buffed: false
+      friend_is_dead: false
+      i_am_close_to_friend: true
+      i_have_mp_for_buff: true
+    postcondition:
+      friend_defense_is_buffed: true
+      i_have_mp_for_buff: false
+  - buff_friend_speed:
+    precondition:
+      friend_speed_is_buffed: false
+      friend_is_dead: false
+      i_am_close_to_friend: true
+      i_have_mp_for_buff: true
+    postcondition:
+      friend_speed_is_buffed: true
+      i_have_mp_for_buff: false
+  - buff_my_attack:
+    precondition:
+      my_attack_is_buffed: false
+      i_have_mp_for_buff: true
+    postcondition:
+      my_attack_is_buffed: true
+      i_have_mp_for_buff: false
+  - buff_my_defense:
+    precondition:
+      my_defense_is_buffed: false
+      i_have_mp_for_buff: true
+    postcondition:
+      my_defense_is_buffed: true
+      i_have_mp_for_buff: false
+  - buff_my_speed:
+    precondition:
+      my_speed_is_buffed: false
+      i_have_mp_for_buff: true
+    postcondition:
+      my_speed_is_buffed: true
+      i_have_mp_for_buff: false
+  - debuff_enemy_attack:
+    precondition:
+      enemy_attack_is_debuffed: false
+      enemy_is_dead: false
+      i_am_close_to_enemy: true
+      i_have_mp_for_debuff: true
+    postcondition:
+      enemy_attack_is_debuffed: true
+      i_have_mp_for_debuff: false
+  - debuff_enemy_defense:
+    precondition:
+      enemy_defense_is_debuffed: false
+      enemy_is_dead: false
+      i_am_close_to_enemy: true
+      i_have_mp_for_debuff: true
+    postcondition:
+      enemy_defense_is_debuffed: true
+      i_have_mp_for_debuff: false
+  - debuff_enemy_speed:
+    precondition:
+      enemy_speed_is_debuffed: false
+      enemy_is_dead: false
+      i_am_close_to_enemy: true
+      i_have_mp_for_debuff: true
+    postcondition:
+      enemy_speed_is_debuffed: true
+      i_have_mp_for_debuff: false
+  - escape_from_enemy:  # move away from the nearst enemy
+    precondition:
+      enemy_hp_is_low: false
+      enemy_is_dead: false
+      i_am_close_to_enemy: true
+      my_hp_is_low: true
+    postcondition:
+      i_am_close_to_enemy: false
+  - fireball_enemy:  # cast a fireball spell to the nearest enemy
+    precondition:
+      enemy_hp_is_high: true
+      enemy_is_dead: false
+      i_am_close_to_enemy: false
+      i_have_mp_for_fireball: true 
+    postcondition:
+      enemy_is_dead: true
+      enemy_hp_is_high: false
+      i_have_mp_for_fireball: false
+  - move_to_enemy: # move to the nearst enemy
+    precondition:
+      i_found_enemy: true
+      enemy_is_dead: false
+      i_am_close_to_enemy: false
+    postcondition:
+      i_am_close_to_enemy: true
+      i_am_close_to_friend: false
+  - move_to_friend:  # move to the nearst friend
+    precondition:
+      friend_is_dead: false
+      i_found_friend: true
+      i_am_close_to_friend: false
+    postcondition:
+      i_am_close_to_friend: true
+  - move_to_healing_area:  # move to the nearst healing area
+    precondition:
+      i_found_healing_area: true
+      i_am_in_healing_area: false
+    postcondition:
+      i_am_in_healing_area: true
+  - move_to_item:  # move to the nearst item
+    precondition:
+      i_found_item: true
+    postcondition:
+      i_found_item: false
+      i_have_power_portion: true
+  - heal_friend: # cast a heal spell to the nearest friend
+    precondition:
+      friend_hp_is_low: true
+      i_am_close_to_friend: true
+      i_have_mp_for_heal: true
+    postcondition:
+      friend_hp_is_high: true
+      friend_hp_is_low: false
+      i_have_mp_for_heal: false
+  - heal_myself:  # cast a heal spell to the nearest friend
+    precondition:
+      my_hp_is_low: true
+      i_have_mp_for_heal: true
+    postcondition:
+      my_hp_is_low: false
+      my_hp_is_high: true
+      i_have_mp_for_heal: false
+  - idle:  # just wait
+    precondition: []  # no condition required
+    postcondition: []  # no condition changed
+  - roam:  # walk around to find something
+    precondition:
+      enemy_is_dead: false
+      i_found_enemy: false
+      i_found_friend: false
+      i_found_healing_area: false
+      i_found_item: false
+    postcondition:
+      i_found_enemy: true
+      i_found_friend: true
+      i_found_healing_area: true
+      i_found_item: true
+  - use_power_portion:
+    precondition:
+      enemy_is_dead: false
+      i_have_power_portion: true
+      my_attack_is_buffed: false
+      my_defense_is_buffed: false
+    postcondition:
+      i_have_power_portion: false
+      my_attack_is_buffed: true
+      my_defense_is_buffed: true
+  - use_mp_portion:
+    precondition:
+      enemy_is_dead: false
+      i_have_mp_portion: true
+      i_have_mp_for_debuff: false
+      i_have_mp_for_fireball: false
+      i_have_mp_for_heal: false
+    postcondition:
+      i_have_mp_portion: false
+      i_have_mp_for_debuff: true
+      i_have_mp_for_fireball: true
+      i_have_mp_for_heal: true
