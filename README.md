@@ -145,7 +145,7 @@ C=\sum e_{c}
 $$
 
 - $C$ : is the centrality of one action.
-- $e_{c}$ : is the centrality of edges with the same label.
+- $e_{c}$ : is the centrality of edges with the same labels.
 
 The result is here:
 
