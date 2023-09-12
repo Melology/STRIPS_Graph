@@ -126,6 +126,48 @@ Every time we add some new nodes to our graph, we always check if there are some
 
 Finally, we could generate the whole graph! :sunglasses: 
 
+## For centrality
+
+After we generated the graph representing the STRIPS. We finally could compute the centrality of each action.
+
+Firstly, we just use a tool named [edge_betweenness_centrality](https://networkx.org/documentation/stable/reference/algorithms/generated/networkx.algorithms.centrality.edge_betweenness_centrality.html).
+
+By this algorithm, we are able to compute each edge's centrality.
+
+Considering this graph, most of actions are repeating again and again. If we want to comput each action's centrality respectively. We need another way to deal with it.
+
+This is a easy way(Not sure it is the best way) to compute acions'centrality.
+
+In the graph, we give the same lable to edges if they are representing the same actions.
+
+$$
+C=\sum e_{c}
+$$
+
+- $C$ : is the centrality of one action.
+- $e_{c}$ : is the centrality of edges with the same label.
+
+The result is here:
+
+```
+Label 'buff_friend_defense': Total Betweenness Edge Centrality = 0.0009522945764556503
+Label 'buff_friend_speed': Total Betweenness Edge Centrality = 0.0009522945764556503
+Label 'buff_friend_attack': Total Betweenness Edge Centrality = 0.0009522945764556503
+Label 'buff_my_attack': Total Betweenness Edge Centrality = 0.0009069472156720479
+Label 'buff_my_defense': Total Betweenness Edge Centrality = 0.0009522945764556503
+Label 'buff_my_speed': Total Betweenness Edge Centrality = 0.0009522945764556503
+Label 'move_to_enemy': Total Betweenness Edge Centrality = 0.010157808815526937
+Label 'fireball_enemy': Total Betweenness Edge Centrality = 0.011563576999818604
+Label 'heal_friend': Total Betweenness Edge Centrality = 0.010339198258661347
+Label 'debuff_enemy_attack': Total Betweenness Edge Centrality = 0.004625430799927444
+Label 'debuff_enemy_defense': Total Betweenness Edge Centrality = 0.004625430799927444
+Label 'debuff_enemy_speed': Total Betweenness Edge Centrality = 0.004625430799927444
+Label 'melee_enemy': Total Betweenness Edge Centrality = 0.0013150734627244696
+Label 'move_to_friend': Total Betweenness Edge Centrality = 0.014692544893887171
+```
+
+The higher centrality of actions means the more frequent they are.  
+In this caes, we can know that the action **'move_to_friend'** might be the most freuqnet one.
 
 
 
